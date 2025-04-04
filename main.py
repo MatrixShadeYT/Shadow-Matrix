@@ -1,8 +1,8 @@
 from speech_to_text import mic_process
-power = True
-while(power==True):
+print("Program Began")
+while(True):
     mic = mic_process()
-    if (mic == "stop") {
-        power = False
-    }
-    print(mic)
+    if (mic == "stop"):
+        break
+    print("ME: {0}".format(mic))
+print("Program Over")

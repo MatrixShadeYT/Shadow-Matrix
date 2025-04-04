@@ -1,4 +1,3 @@
-# Libraries
 import speech_recognition as sr
 import pyaudio
 import pyttsx3
@@ -10,7 +9,7 @@ def mic_process():
     while(1):
         try:
             with sr.Microphone() as source2:
-                r.adjust_for_ambient_noise(source2, duration=0.2)
+                r.adjust_for_ambient_noise(source2, duration=0.1)
                 audio2 = r.listen(source2)
                 MyText = r.recognize_google(audio2)
                 return MyText
