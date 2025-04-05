@@ -1,7 +1,7 @@
-from speech_to_text import mic_process
+from speech_to_text import microphone
 print("Program Began")
 while(True):
-    mic = mic_process()
+    mic = microphone()
     if (mic == "stop"):
         break
     print("ME: {0}".format(mic))

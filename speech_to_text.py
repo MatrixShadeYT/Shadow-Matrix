@@ -5,7 +5,7 @@ import pyttsx3
 # Initialize Recognizer
 r = sr.Recognizer()
 
-def mic_process():
+def microphone():
     while(1):
         try:
             with sr.Microphone() as source2:
