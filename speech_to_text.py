@@ -2,7 +2,6 @@ import speech_recognition as sr
 import pyaudio
 import pyttsx3
 
-# Initialize Recognizer
 r = sr.Recognizer()
 
 def microphone():
