@@ -7,6 +7,7 @@ speech('Program started.')
 while(True):
     mic = microphone()
     if (mic == "stop"):
+        time.sleep(1)
         speech('Exiting program.')
         break
     print("ME: {0}".format(mic))
