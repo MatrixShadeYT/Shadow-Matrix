@@ -3,7 +3,7 @@ import speech_recognition as sr
 r = sr.Recognizer()
 
 def microphone():
-    while(1):
+    while True:
         try:
             with sr.Microphone() as source2:
                 r.adjust_for_ambient_noise(source2, duration=0.1)

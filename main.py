@@ -4,14 +4,14 @@ import chatbot_ai
 #import pyaudio
 import time
 print('Program started.')
-while(True):
+while True:
     mic = microphone()
-    if (mic.lower() == "exit program"):
+    if mic.lower() == "exit program":
         print('Exiting program.')
         break
     response = chatbot_ai.response(mic)
-    for (i in ["who","what","where","why","when","how"]):
-        if (i in mic):
+    for i in ["who","what","where","why","when","how"]:
+        if i in mic:
             print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
         else:
             print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
