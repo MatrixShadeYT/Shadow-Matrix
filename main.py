@@ -5,8 +5,8 @@ import chatbot_ai
 import time
 print('Program started.')
 while True:
-    mic = microphone()
-    if mic.lower() == "exit program":
+    mic = microphone().lower()
+    if mic == "exit program":
         speech('Exiting program.')
         print('Exiting program.')
         break
