@@ -7,7 +7,7 @@ speech('Program started.')
 while(True):
     mic = microphone()
     if (mic == "stop"):
-        print('CMD: STOP DETECTED!\nExiting program.')
+        print('System: COMMAND STOP DETECTED!\nExiting program.')
         speech('Exiting program.')
         break
     response = "Response."
