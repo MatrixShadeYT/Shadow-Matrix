@@ -7,7 +7,10 @@ def message(text):
     return "Response."
 
 def response(text):
-    output = message(text)
-    conversation['user'].append(text)
-    conversation['bot'].append(output)
-    return output
+    if (text == "End conversation."):
+        return "\n\n"
+    else:
+        output = message(text)
+        conversation['user'].append(text)
+        conversation['bot'].append(output)
+        return output
