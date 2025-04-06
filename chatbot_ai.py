@@ -10,7 +10,7 @@ def response(text):
     if text == "end conversation":
         conversation['user'] = []
         conversation['bot'] = []
-        return "Clearing Records.\n\n"
+        return "Clearing Records.\n"
     else:
         output = message(text)
         conversation['user'].append(text)

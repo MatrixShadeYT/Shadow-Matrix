@@ -8,17 +8,23 @@ while True:
     mic = microphone().lower()
     if mic == "exit program":
         speech('Exiting program.')
-        print('Exiting program.')
+        print('BOT: Exiting program.')
         break
     response = chatbot_ai.response(mic)
     track = False
-    for i in ["who","what","where","why","when","how"]:
-        if track == False:
-            if i in mic:
-                print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
-                track = True
-            else:
-                print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
-                track = True
+    if 'who' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    elif 'what' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    elif 'where' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    elif 'why' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    elif 'when' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    elif 'how' in mic:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+    else:
+        print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
     speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
