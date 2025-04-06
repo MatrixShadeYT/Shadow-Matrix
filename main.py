@@ -4,6 +4,7 @@ from text_to_speech import speech
 import time
 time.sleep(1)
 speech('Program started.')
+print('Program started.')
 while(True):
     mic = microphone()
     if (mic == "stop"):
@@ -11,3 +12,4 @@ while(True):
     print("ME: {0}".format(mic))
 time.sleep(1)
 speech('Exiting program.')
+print('Exiting program.')
