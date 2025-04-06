@@ -3,6 +3,7 @@ from text_to_speech import speech
 #import pyaudio
 print("Program Began")
 while(True):
+    print('Listening')
     mic = microphone()
     if (mic == "stop"):
         break
