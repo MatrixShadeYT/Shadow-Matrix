@@ -12,5 +12,5 @@ while(True):
         break
     response = "Response."
     print("ME: {0}".format(mic))
-    print("BOT: {0}".format(response))
     speech(response)
+    print("BOT: {0}".format(response))
