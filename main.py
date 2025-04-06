@@ -19,5 +19,5 @@ while True:
             else:
                 print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
                 track = True
-    speech(response)
+    speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))

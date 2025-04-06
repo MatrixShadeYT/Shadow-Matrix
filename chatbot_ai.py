@@ -8,7 +8,9 @@ def message(text):
 
 def response(text):
     if text == "End conversation.":
-        return "\n\n"
+        conversation['user'] = []
+        conversation['bot'] = []
+        return "Clearing Records.\n\n"
     else:
         output = message(text)
         conversation['user'].append(text)
