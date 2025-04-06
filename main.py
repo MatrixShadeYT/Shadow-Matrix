@@ -1,9 +1,10 @@
 from speech_to_text import microphone
 from text_to_speech import speech
 import chatbot_ai
-#import pyaudio
-import time
-print('Program started.')
+
+speech('Program started')
+print('BOT: Program started.')
+
 while True:
     mic = microphone().lower()
     if mic == "exit program":
