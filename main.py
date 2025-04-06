@@ -7,6 +7,7 @@ print('Program started.')
 while True:
     mic = microphone()
     if mic.lower() == "exit program":
+        speech('Exiting program.')
         print('Exiting program.')
         break
     response = chatbot_ai.response(mic)
