@@ -2,7 +2,7 @@ from speech_to_text import microphone
 from text_to_speech import speech
 import chatbot_ai
 
-speech("this is text to speech")
+speech(input("Text: "))
 
 #speech('Program started')
 #print('BOT: Program started.')
