@@ -2,12 +2,10 @@ from speech_to_text import microphone
 from text_to_speech import speech
 import chatbot_ai
 
-speech(input("Text: "))
+speech('Program started')
+print('BOT: Program started.')
 
-#speech('Program started')
-#print('BOT: Program started.')
-
-while 1 == 0:
+while True:
     mic = microphone().lower()
     if mic == "exit program":
         speech('Exiting program.')
