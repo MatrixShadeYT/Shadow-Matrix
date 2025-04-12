@@ -6,7 +6,6 @@ cursor = connection.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
     id TEXT PRIMARY KEY,
-    response_id TEXT UNIQUE,
     input text,
     output text
 )''')
