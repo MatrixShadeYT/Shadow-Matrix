@@ -42,7 +42,7 @@ def getTrainingData():
 
 # Get specified amount of items randomly
 def getTestingData(ammount):
-    tList = getTrainingList()
+    tList = getTrainingData()
     listed = []
     nList = []
     for i in range(ammount):
