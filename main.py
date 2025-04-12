@@ -11,8 +11,6 @@ while True:
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
-    response = chatbot_ai.response(mic)
-    track = False
     for i in ['who','what','where','why','when','how']:
         if i in mic:
             question = True
@@ -22,4 +20,5 @@ while True:
     else:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
         speech(response.replace('\n',' '))
+    response = chatbot_ai.response(mic)
     print("BOT: {0}".format(response))
