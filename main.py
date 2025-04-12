@@ -11,12 +11,12 @@ while True:
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
+    question = False
     for i in ['who','what','where','why','when','how']:
         if i in mic:
             question = True
     if question == True:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
-        question = False
     else:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
         speech(response.replace('\n',' '))
