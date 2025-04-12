@@ -17,7 +17,7 @@ with connection:
 # Training data
 with connection:
     cursor.execute('''CREATE TABLE IF NOT EXISTS training (
-        id TEXT PRIMARY KEY,
+        id TEXT,
         input TEXT,
         output TEXT
     )''')
