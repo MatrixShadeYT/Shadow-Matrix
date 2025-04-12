@@ -1,3 +1,4 @@
+from random import randint
 import sqlite3
 import os
 
@@ -20,8 +21,19 @@ with connection:
         output TEXT
     )''')
 
-def getTestingData():
-
+def getTestingData(ammount):
+    tList = getTrainingList()
+    listed = []
+    nList = []
+    for i in range(ammount):
+        num = randint(0,len(tList))
+        while num in nList:
+            num = randint(0,len(tList))
+        nList.append(num)
+    for i in nList:
+        listed.append(tList[i])
+    return listed
+        
 
 def addTrainingData(file):
     listed = []
@@ -49,6 +61,10 @@ def getByOutput(outputed):
 
 def getList():
     cursor.execute("SELECT * FROM dataset")
+    return cursor.fetchall()
+
+def getTrainingList():
+    cursor.execute("SELECT * FROM training")
     return cursor.fetchall()
 
 def enter(user, inputed, outputed):
