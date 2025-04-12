@@ -16,10 +16,10 @@ def formatText(text):
 def microphone():
     while True:
         try:
-            with sr.Microphone() as source2:
-                r.adjust_for_ambient_noise(source2, duration=0.1)
-                audio2 = r.listen(source2)
-                MyText = r.recognize_google(audio2)
+            with sr.Microphone() as source:
+                r.adjust_for_ambient_noise(source,duration=0.1)
+                audio = r.listen(source)
+                MyText = r.recognize_google(audio)
                 text = format(MyText)
                 return text
         except sr.RequestError as e:
