@@ -6,14 +6,6 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-# Dataset
-with connection:
-    cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
-        user TEXT,
-        input TEXT,
-        output TEXT
-    )''')
-
 # Training data
 with connection:
     cursor.execute('''CREATE TABLE IF NOT EXISTS training (
@@ -55,6 +47,14 @@ def getTestingData(ammount):
     for i in nList:
         listed.append(tList[i])
     return listed
+
+# Dataset
+with connection:
+    cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
+        user TEXT,
+        input TEXT,
+        output TEXT
+    )''')
 
 # Get values by user
 def getByUser(user):
