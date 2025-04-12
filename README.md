@@ -22,3 +22,9 @@ def microphone():
         except sr.UnknownValueError:
             print("Unknown error occurred.")
 '''
+
+## Database
+I went with "sqlite3" which is another default import. There are lots of options out there, I just found this one the easiest to deal with.
+'''
+
+'''
