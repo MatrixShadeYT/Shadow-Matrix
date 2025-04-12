@@ -5,6 +5,7 @@ Here's a list of what you need to make in order to create a chatbot.
 
 ## Speech to text
 For my speech to text I used "speech_recognition". It's a default import so you don't have to worry about installing it. You can use lots of different ones but this is the one I went with.
+
 '''
 import speech_recognition as sr
 r = sr.Recognizer()
@@ -25,6 +26,7 @@ def microphone():
 
 ## Database
 I went with "sqlite3" which is another default import. There are lots of options out there, I just found this one the easiest to deal with.
+
 '''
 
 '''
