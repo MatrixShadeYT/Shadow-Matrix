@@ -14,7 +14,8 @@ def previous():
     pass
 
 def enter(inputed, outputed):
-    cursor.execute("INSERT INTO dataset VALUES (:input, :output)", {'input': inputed, 'output': outputed})
+    with connection:
+        cursor.execute("INSERT INTO dataset VALUES (:input, :output)", {'input': inputed, 'output': outputed})
 
 def close():
     connection.close()
