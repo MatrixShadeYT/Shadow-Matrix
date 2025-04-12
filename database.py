@@ -6,8 +6,6 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-
-
 class training:
     # Create Table
     def __init__():
@@ -51,8 +49,6 @@ class training:
         for i in nList:
             listed.append(tList[i])
         return listed
-
-
 
 class dataset:
     # Create Table
@@ -99,8 +95,6 @@ class dataset:
                 "DELETE FROM dataset WHERE user = :user AND input = :input AND output = :output",
                 {'user': user,'input': inputed,'output': outputed}
             )
-
-
 
 # Close the connection to database
 def close():
