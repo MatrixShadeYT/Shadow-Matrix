@@ -25,7 +25,7 @@ def removeItem(inputed,outputed):
     with connection:
         cursor.execute(
             "DELETE from dataset WHERE input = :input AND output = :output",
-            {'input': inputed,'output',outputed}
+            {'input': inputed,'output': outputed}
         )
 
 def close():
