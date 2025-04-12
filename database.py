@@ -30,19 +30,22 @@ def addTrainingData(file):
                 {'input': inputed, 'output': outputed}
             )
 
-def getPrevious(inputed,table):
+def getPreviousByUser(user):
+    cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
+
+def getPreviousByInput(inputed):
     cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
     return cursor.fetchall()
 
-def getList(table):
+def getList():
     cursor.execute("SELECT * FROM dataset")
     return cursor.fetchall()
 
-def enter(inputed, outputed, table):
+def enter(user, inputed, outputed):
     with connection:
         cursor.execute(
-            "INSERT INTO dataset VALUES (:input, :output)",
-            {'input': inputed, 'output': outputed}
+            "INSERT INTO dataset VALUES (:user, :input, :output)",
+            {'user': user,'input': inputed, 'output': outputed}
         )
 
 def removeItem(inputed,outputed):
