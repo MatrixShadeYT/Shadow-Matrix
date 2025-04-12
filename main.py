@@ -12,7 +12,7 @@ while True:
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
-    response = chatbot_ai.response(mic)
+    response = chatbot_ai.response(mic,user)
     speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
 database.close()
