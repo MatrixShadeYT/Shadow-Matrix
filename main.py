@@ -27,5 +27,5 @@ while True:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
     else:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
-    speech(mic)#response.replace('\n',' '))
+    speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
