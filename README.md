@@ -30,7 +30,7 @@ I went with "sqlite3" which is another default import. There are lots of options
 ## Chatbot
 TEXT
 ```python
-import database
+# This is a work in progress.
 ```
 
 ## Text-To-Speech
