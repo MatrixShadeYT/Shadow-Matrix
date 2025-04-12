@@ -4,33 +4,34 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
-    id TEXT PRIMARY KEY,
-    input text,
-    output text
-)''')
-connection.commit()
+def create_table(table):
+    with connection:
+        cursor.execute('''CREATE TABLE IF NOT EXISTS :table (
+            id TEXT PRIMARY KEY,
+            input text,
+            output text
+        )''', {'table': table})
 
-def getPrevious(inputed):
-    cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
+def getPrevious(inputed,table):
+    cursor.execute("SELECT * FROM :table WHERE input = :input",{'table': table,'input':inputed})
     return cursor.fetchall()
 
-def getList():
-    cursor.execute("SELECT * FROM dataset")
+def getList(table):
+    cursor.execute("SELECT * FROM :table", {'table': table})
     return cursor.fetchall()
 
-def enter(inputed, outputed):
+def enter(inputed, outputed, table):
     with connection:
         cursor.execute(
-            "INSERT INTO dataset VALUES (:input, :output)",
-            {'input': inputed, 'output': outputed}
+            "INSERT INTO :table VALUES (:input, :output)",
+            {'table': table,'input': inputed, 'output': outputed}
         )
 
 def removeItem(inputed,outputed):
     with connection:
         cursor.execute(
-            "DELETE from dataset WHERE input = :input AND output = :output",
-            {'input': inputed,'output': outputed}
+            "DELETE FROM :table WHERE input = :input AND output = :output",
+            {'table': table,'input': inputed,'output': outputed}
         )
 
 def close():
