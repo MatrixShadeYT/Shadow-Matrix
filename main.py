@@ -8,11 +8,11 @@ print('BOT: Program started.')
 while True:
     mic = microphone()
     if mic == "Exit program.":
-        print('ME: Exit program.')
+        print('Shade: Exit program.')
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
-    response = chatbot_ai.response(mic,user)
+    response = chatbot_ai.response(mic,'Shade')
     speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
 database.close()
