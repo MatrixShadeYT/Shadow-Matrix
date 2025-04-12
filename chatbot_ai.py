@@ -1,10 +1,12 @@
+
+
+def message(text):
+    return "Response."
+
 conversation = {
     "user": [],
     "bot": []
 }
-
-def message(text):
-    return "Response."
 
 def response(text):
     output = message(text)
