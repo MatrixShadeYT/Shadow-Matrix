@@ -1,15 +1,12 @@
+import database
 
+data = database()
 
-def message(text):
-    return "Response."
+def message(text,user):
+    output = "Bot." if text & user else "Human."
+    return output
 
-conversation = {
-    "user": [],
-    "bot": []
-}
-
-def response(text):
-    output = message(text)
-    conversation['user'].append(text)
-    conversation['bot'].append(output)
+def response(text,user):
+    output = message(text,user)
+    database.enter(user,text,output)
     return output
