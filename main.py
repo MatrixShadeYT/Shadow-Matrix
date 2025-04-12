@@ -8,6 +8,7 @@ print('BOT: Program started.')
 while True:
     mic = microphone().lower()
     if mic == "exit program":
+        print('ME: Exit program.')
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
