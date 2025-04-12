@@ -2,9 +2,9 @@
 I started this project because I saw Neuro-san from videl's channel and thought it might be a fun project to work on making myself one. It's definitely a lot more complex than I expected. There's tons of levels for what you need to do.
 Here's a list of what you need to make in order to create a chatbot.
 1 Speech-to-text, 2 Database, 3 Chatbot, 4 Text-to-speech<br>
-## Speech to text
+## Speech-To-Text
 For my speech to text I used "speech_recognition". It's a default import so you don't have to worry about installing it. You can use lots of different ones but this is the one I went with.<br>
-'''python
+```python
 import speech_recognition as sr
 r = sr.Recognizer()
 def microphone():
@@ -19,9 +19,30 @@ def microphone():
             print("Could not request results; {0}".format(e))
         except sr.UnknownValueError:
             print("Unknown error occurred.")
-'''<br>
+```
+
 ## Database
 I went with "sqlite3" which is another default import. There are lots of options out there, I just found this one the easiest to deal with.<br>
-'''
+```python
 
-'''
+```
+
+## Chatbot
+TEXT
+```python
+import database
+```
+
+## Text-To-Speech
+This is just a prototype for now.
+```python
+import pyttsx3
+engine = pyttsx3.init()
+engine.setProperty('voice',engine.getProperty('voices')[1].id)
+def speech(text,file=False):
+    if file == True:
+        engine.save_to_file(text,'output')
+    else:
+        engine.say(text)
+    engine.runAndWait()
+```
