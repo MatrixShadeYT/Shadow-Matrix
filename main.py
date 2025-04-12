@@ -1,7 +1,6 @@
 from speech_to_text import microphone
 from text_to_speech import speech
 import chatbot_ai
-import database
 
 speech('Program started')
 print('BOT: Program started.')
