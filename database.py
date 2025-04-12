@@ -10,6 +10,7 @@ def create_table(table):
             input text,
             output text
         )''', {'table': table})
+    return table
 
 def getPrevious(inputed,table):
     cursor.execute("SELECT * FROM :table WHERE input = :input",{'table': table,'input':inputed})
