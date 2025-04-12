@@ -63,7 +63,7 @@ def getList():
     cursor.execute("SELECT * FROM dataset")
     return cursor.fetchall()
 
-def getTrainingList():
+def getTrainingData():
     cursor.execute("SELECT * FROM training")
     return cursor.fetchall()
 
