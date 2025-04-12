@@ -12,6 +12,7 @@ connection.commit()
 
 def getPrevious(inputed):
     cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
+    return cursor.fetchall()
 
 def getList():
     cursor.execute("SELECT * FROM dataset")
