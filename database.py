@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-connection = sqlite3.connect(':memory:')
+connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
