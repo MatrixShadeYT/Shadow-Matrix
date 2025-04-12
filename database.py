@@ -32,6 +32,7 @@ def addTrainingData(file):
 
 def getByUser(user):
     cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
+    return cursor.fetchall()
 
 def getByInput(inputed):
     cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
