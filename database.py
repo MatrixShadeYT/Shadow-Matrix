@@ -18,25 +18,37 @@ with connection:
         output TEXT
     )''')
 
+def addTrainingData(file):
+    listed = []
+    with f as open(file,'r'):
+        for i in f:
+            listed.append([i.split('|')[0],i.split('|')[1]])
+    for i in listed:
+        with connection:
+            cursor.execute(
+                "INSERT INTO training VALUES (:input, :output)",
+                {'input': inputed, 'output': outputed}
+            )
+
 def getPrevious(inputed,table):
-    cursor.execute("SELECT * FROM :table WHERE input = :input",{'table': table,'input':inputed})
+    cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
     return cursor.fetchall()
 
 def getList(table):
-    cursor.execute("SELECT * FROM :table", {'table': table})
+    cursor.execute("SELECT * FROM dataset")
     return cursor.fetchall()
 
 def enter(inputed, outputed, table):
     with connection:
         cursor.execute(
-            "INSERT INTO :table VALUES (:input, :output)",
-            {'table': table,'input': inputed, 'output': outputed}
+            "INSERT INTO dataset VALUES (:input, :output)",
+            {'input': inputed, 'output': outputed}
         )
 
 def removeItem(inputed,outputed):
     with connection:
         cursor.execute(
-            "DELETE FROM :table WHERE input = :input AND output = :output",
+            "DELETE FROM dataset WHERE input = :input AND output = :output",
             {'table': table,'input': inputed,'output': outputed}
         )
 
