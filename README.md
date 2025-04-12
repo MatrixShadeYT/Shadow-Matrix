@@ -7,7 +7,7 @@ Here's a list of what you need to make in order to create a chatbot.
 For my speech to text I used "speech_recognition". It's a default import so you don't have to worry about installing it. You can use lots of different ones but this is the one I went with.
 
 '''
-import speech_recognition as sr
+import speech_recognition as sr\n
 r = sr.Recognizer()
 
 def microphone():
