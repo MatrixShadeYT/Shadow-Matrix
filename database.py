@@ -4,7 +4,7 @@ import os
 connection = sqlite3.connect(':memory:')
 cursor = connection.cursor()
 
-cursor.execute('''CREATE TABLE dataset (
+cursor.execute('''CREATE TABLE [IF NOT EXISTS] dataset (
     input text,
     output text
 )''')
