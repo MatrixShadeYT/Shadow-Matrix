@@ -7,6 +7,7 @@ cursor = connection.cursor()
 # Dataset
 with connection:
     cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
+        user TEXT,
         input TEXT,
         output TEXT
     )''')
@@ -14,9 +15,13 @@ with connection:
 # Training data
 with connection:
     cursor.execute('''CREATE TABLE IF NOT EXISTS training (
+        id TEXT PRIMARY KEY,
         input TEXT,
         output TEXT
     )''')
+
+def getTestingData():
+
 
 def addTrainingData(file):
     listed = []
@@ -36,6 +41,10 @@ def getByUser(user):
 
 def getByInput(inputed):
     cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
+    return cursor.fetchall()
+
+def getByOutput(outputed):
+    cursor.execute("SELECT * FROM dataset WHERE output = :output",{'output':outputed})
     return cursor.fetchall()
 
 def getList():
