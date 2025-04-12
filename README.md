@@ -24,7 +24,24 @@ def microphone():
 ## Database
 I went with "sqlite3" which is another default import. There are lots of options out there, I just found this one the easiest to deal with.<br>
 ```python
-
+import sqlite3
+connection = sqlite3.connect(':memory:')
+cursor = connection.cursor()
+with connection:
+    cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
+        user TEXT,
+        input TEXT,
+        output TEXT
+    )''')
+with connection:
+    cursor.execute("INSERT INTO dataset VALUES (:user, :input, :output)", {'user': 'USERNAME', 'input': 'Hi.', 'output': 'Hello.'})
+cursor.execute("SELECT * FROM dataset")
+print(cursor.fetchall())
+with connection:
+    cursor.execute("DELETE FROM dataset WHERE user = :user AND input = :input AND output = :output", {'user': 'USERNAME', 'input': 'Hi.', 'output': 'Hello.'})
+cursor.execute("SELECT * FROM dataset")
+print(cursor.fetchall())
+connection.close()
 ```
 
 ## Chatbot
