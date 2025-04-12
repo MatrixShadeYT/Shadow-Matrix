@@ -30,10 +30,10 @@ def addTrainingData(file):
                 {'input': inputed, 'output': outputed}
             )
 
-def getPreviousByUser(user):
+def getByUser(user):
     cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
 
-def getPreviousByInput(inputed):
+def getByInput(inputed):
     cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
     return cursor.fetchall()
 
