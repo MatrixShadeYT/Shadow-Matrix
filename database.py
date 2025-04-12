@@ -55,12 +55,12 @@ class training:
 class dataset:
     # Create Table
     def __init__():
-    with connection:
-        cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
-            user TEXT,
-            input TEXT,
-            output TEXT
-        )''')
+        with connection:
+            cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
+                user TEXT,
+                input TEXT,
+                output TEXT
+            )''')
 
     # Get values by user
     def getByUser(user):
