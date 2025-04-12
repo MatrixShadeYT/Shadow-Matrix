@@ -21,6 +21,22 @@ with connection:
         output TEXT
     )''')
 
+def addTrainingData(file):
+    listed = []
+    with f as open(file,'r'):
+        for i in f:
+            listed.append([i.split('|')[0],i.split('|')[1]])
+    for i in listed:
+        with connection:
+            cursor.execute(
+                "INSERT INTO training VALUES (:input, :output)",
+                {'input': inputed, 'output': outputed}
+            )
+
+def getTrainingData():
+    cursor.execute("SELECT * FROM training")
+    return cursor.fetchall()
+
 def getTestingData(ammount):
     tList = getTrainingList()
     listed = []
@@ -33,19 +49,6 @@ def getTestingData(ammount):
     for i in nList:
         listed.append(tList[i])
     return listed
-        
-
-def addTrainingData(file):
-    listed = []
-    with f as open(file,'r'):
-        for i in f:
-            listed.append([i.split('|')[0],i.split('|')[1]])
-    for i in listed:
-        with connection:
-            cursor.execute(
-                "INSERT INTO training VALUES (:input, :output)",
-                {'input': inputed, 'output': outputed}
-            )
 
 def getByUser(user):
     cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
@@ -61,10 +64,6 @@ def getByOutput(outputed):
 
 def getList():
     cursor.execute("SELECT * FROM dataset")
-    return cursor.fetchall()
-
-def getTrainingData():
-    cursor.execute("SELECT * FROM training")
     return cursor.fetchall()
 
 def enter(user, inputed, outputed):
