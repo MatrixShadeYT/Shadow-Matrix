@@ -1,7 +1,7 @@
 from random import randint
 import sqlite3
 import os
-XD
+
 # Initiate the connection
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
