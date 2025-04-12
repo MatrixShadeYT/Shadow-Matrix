@@ -10,6 +10,9 @@ cursor.execute('''CREATE TABLE dataset (
 )''')
 connection.commit()
 
+def getPrevious(inputed):
+    cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
+
 def getList():
     cursor.execute("SELECT * FROM dataset")
     return cursor.fetchall()
