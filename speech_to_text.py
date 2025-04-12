@@ -1,7 +1,5 @@
 import speech_recognition as sr
 
-lol
-
 r = sr.Recognizer()
 
 def formatText(text):
