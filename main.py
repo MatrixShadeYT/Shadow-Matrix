@@ -2,7 +2,6 @@ from speech_to_text import microphone
 from text_to_speech import speech
 import chatbot_ai
 
-question = False
 speech('Program started')
 print('BOT: Program started.')
 
@@ -19,6 +18,7 @@ while True:
             question = True
     if question == True:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"?"))
+        question = False
     else:
         print("ME: {0}".format(mic[0].upper()+mic[1:]+"."))
         speech(response.replace('\n',' '))
