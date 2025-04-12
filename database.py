@@ -6,6 +6,7 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
+# Training Database
 class training:
     # Create Table
     def __init__():
@@ -50,6 +51,7 @@ class training:
             listed.append(tList[i])
         return listed
 
+# Dataset Database
 class dataset:
     # Create Table
     def __init__():
