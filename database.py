@@ -4,13 +4,12 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-def create_table(table):
-    with connection:
-        cursor.execute('''CREATE TABLE IF NOT EXISTS ? (
-            input TEXT,
-            output TEXT
-        )''', (table,))
-    return table
+with connection:
+    cursor.execute('''CREATE TABLE IF NOT EXISTS ? (
+        input TEXT,
+        output TEXT
+    )''', (table,))
+
 
 def getPrevious(inputed,table):
     cursor.execute("SELECT * FROM :table WHERE input = :input",{'table': table,'input':inputed})
