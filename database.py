@@ -7,7 +7,6 @@ cursor = connection.cursor()
 def create_table(table):
     with connection:
         cursor.execute('''CREATE TABLE IF NOT EXISTS :table (
-            id TEXT PRIMARY KEY,
             input text,
             output text
         )''', {'table': table})
