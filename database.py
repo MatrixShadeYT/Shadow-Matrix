@@ -24,10 +24,12 @@ with connection:
 
 # Adds from files using - User|Input|Output
 def addTrainingData(file):
+    num = len(getTrainingData())
     listed = []
     with f as open(file,'r'):
+        num += 1
         for i in f:
-            listed.append([i.split('|')[0],i.split('|')[1],i.split('|')[2]])
+            listed.append([num,i.split('|')[0],i.split('|')[1]])
     for i in listed:
         with connection:
             cursor.execute(
