@@ -9,7 +9,7 @@ cursor = connection.cursor()
 # Training Database
 class training:
     # Create Table
-    def __init__():
+    def __init__(self):
         with connection:
             cursor.execute('''CREATE TABLE IF NOT EXISTS training (
                 id TEXT,
@@ -53,7 +53,7 @@ class training:
 # Dataset Database
 class dataset:
     # Create Table
-    def __init__():
+    def __init__(self):
         with connection:
             cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
                 user TEXT,
