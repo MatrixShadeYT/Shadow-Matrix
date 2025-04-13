@@ -20,16 +20,15 @@ class training:
     # Adds from files using - User|Input|Output
     def addTrainingData(file):
         num = len(getTrainingData())
-        listed = []
-        with f as open(file,'r'):
-            num += 1
-            for i in f.readlines():
-                listed.append([num,i.split('|')[0],i.split('|')[1]])
+        with file as open(file,'r'):
+            for i in file.readlines():
+                listed.append(i.split('|'))
         for i in listed:
+            num += 1
             with connection:
                 cursor.execute(
-                    "INSERT INTO training VALUES (:input, :output)",
-                    {'input': inputed, 'output': outputed}
+                    "INSERT INTO training VALUES (:id :input, :output)",
+                    {'id': num,'input': inputed, 'output': outputed}
                 )
 
     # Gets the list of data from the database
