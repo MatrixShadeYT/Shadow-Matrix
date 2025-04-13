@@ -1,6 +1,6 @@
 import database
 
-data = database()
+data = database.dataset()
 
 def message(text,user):
     output = "RESPONSE TO {0} WHO SAID {1}".format(user,text)
