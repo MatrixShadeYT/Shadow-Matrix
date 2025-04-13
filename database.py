@@ -23,7 +23,7 @@ class training:
         listed = []
         with f as open(file,'r'):
             num += 1
-            for i in f:
+            for i in f.readlines():
                 listed.append([num,i.split('|')[0],i.split('|')[1]])
         for i in listed:
             with connection:
