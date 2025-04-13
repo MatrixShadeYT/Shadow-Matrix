@@ -71,3 +71,14 @@ def speech(text,file=False):
         engine.say(text)
     engine.runAndWait()
 ```
+
+## Create-Model
+TEXT
+
+## Animate
+TEXT
+
+## Vtube-Studio
+TEXT
+
+## Movement
