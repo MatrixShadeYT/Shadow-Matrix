@@ -20,7 +20,7 @@ class training:
     # Adds from files using - User|Input|Output
     def addTrainingData(file):
         num = len(getTrainingData())
-        with file as open(file,'r'):
+        with open(file,'r') as file:
             for i in file.readlines():
                 listed.append(i.split('|'))
         for i in listed:
