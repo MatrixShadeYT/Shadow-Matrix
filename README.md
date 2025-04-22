@@ -55,7 +55,12 @@ connection.close()
 ## Chatbot
 TEXT
 ```python
-# This is a work in progress.
+import keras
+model = keras.Sequential([
+    keras.Input(shape=(180,)),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(10, activation="sigmoid")
+])
 ```
 
 ## Text-To-Speech
