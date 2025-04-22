@@ -1,12 +1,18 @@
 import database
+import keras
 
 data = database.dataset()
+model = keras.Sequential([
+    keras.Input(shape=(180)),
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(10, activation="sigmoid")
+])
 
-def message(text,user):
-    output = "RESPONSE TO {0} WHO SAID {1}".format(user,text)
+def request(text,user):
+    output = ""
     return output
 
 def response(text,user):
-    output = message(text,user)
+    output = request(text,user)
     database.enter(user,text,output)
     return output
