@@ -18,7 +18,7 @@ class training:
             )''')
 
     # Adds from files using - User|Input|Output
-    def addTrainingData(file):
+    def addTrainingData(self,file):
         num = len(getTrainingData())
         with open(file,'r') as file:
             for i in file.readlines():
@@ -32,12 +32,12 @@ class training:
                 )
 
     # Gets the list of data from the database
-    def getTrainingData():
+    def getTrainingData(self):
         cursor.execute("SELECT * FROM training")
         return cursor.fetchall()
 
     # Get specified amount of items randomly
-    def getTestingData(ammount):
+    def getTestingData(self,ammount):
         tList = getTrainingData()
         listed = []
         nList = []
@@ -62,27 +62,27 @@ class dataset:
             )''')
 
     # Get values by user
-    def getByUser(user):
+    def getByUser(self,user):
         cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
         return cursor.fetchall()
 
     # Get values by input
-    def getByInput(inputed):
+    def getByInput(self,inputed):
         cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
         return cursor.fetchall()
 
     # Get values by output
-    def getByOutput(outputed):
+    def getByOutput(self,outputed):
         cursor.execute("SELECT * FROM dataset WHERE output = :output",{'output':outputed})
         return cursor.fetchall()
 
     # Get list of database
-    def getList():
+    def getList(self):
         cursor.execute("SELECT * FROM dataset")
         return cursor.fetchall()
 
     # Add values to database
-    def enter(user, inputed, outputed):
+    def enter(self,user, inputed, outputed):
         with connection:
             cursor.execute(
                 "INSERT INTO dataset VALUES (:user, :input, :output)",
@@ -90,7 +90,7 @@ class dataset:
             )
 
     # Remove item from Database
-    def removeItem(user,inputed,outputed):
+    def removeItem(self,user,inputed,outputed):
         with connection:
             cursor.execute(
                 "DELETE FROM dataset WHERE user = :user AND input = :input AND output = :output",
