@@ -18,6 +18,24 @@ class neuron:
     def getData(self):
         return [self.bias,self.weights]
 
-# Layer [neurons]
-
-# Model [layers] or [[neurons]]
+# Layer [NEURONS] or [[BIAS,[WEIGHTS]]]
+class layer:
+    def __init__(self,data):
+        if isinstance(data[0],int):
+            self.neurons = [neuron(data[i]) for i in range(len(data))]
+        else:
+            self.neurons = data
+    def output(self,inputs):
+        if isinstance(self.neurons,list):
+            output = [self.neurons[i][0] for i in range(len(self.neurons))]
+            for i in range(len(output)):
+                output[i] += inputs[i]*self.weights[i]
+        else:
+            output = [self.neurons[i].getData() for i in range(len(self.neurons))]
+        return output
+    def getData(self):
+        if isinstance(self.neurons,list):
+            output = self.neurons
+        else:
+            [self.neurons[i].getData() for i in range(len(self.neurons))]
+        return output
