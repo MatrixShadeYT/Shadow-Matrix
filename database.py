@@ -38,7 +38,7 @@ class dataset:
         return cursor.fetchall()
 
     # Add values to database
-    def enter(self,user, inputed, outputed):
+    def enter(self,user,inputed,outputed):
         with connection:
             cursor.execute(
                 "INSERT INTO dataset VALUES (:user, :input, :output)",
