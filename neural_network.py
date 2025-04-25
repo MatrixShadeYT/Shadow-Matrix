@@ -10,7 +10,7 @@ class neuron:
         else:
             self.weights = data[1]
             self.bias = data[0]
-    def output(self,input):
+    def output(self,inputs):
         output = self.bias
         for i in range(len(inputs)):
             output += inputs[i]*self.weights[i]
