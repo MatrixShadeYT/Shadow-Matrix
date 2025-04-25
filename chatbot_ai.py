@@ -12,7 +12,15 @@ model.compile(
     loss='mse',
     metrics=['accuracy']
 )
-model.fit(x_train,y_train,epochs=10)
+model.fit(
+    [ # NAME:Input
+        f"{i[0]}:{i[1]}" for i in data.getList()
+    ],
+    [ # Output
+        f"{i[2]}" for i in data.getList()
+    ],
+    epochs=10
+)
 
 def request(text,user):
     output = ""
