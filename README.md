@@ -56,11 +56,23 @@ connection.close()
 TEXT
 ```python
 import keras
+inputed = ["Hi!","How are you?"]
+expect = ["Hello.","Good."]
 model = keras.Sequential([
     keras.Input(shape=(180,)),
     keras.layers.Dense(32, activation="relu"),
     keras.layers.Dense(10, activation="sigmoid")
 ])
+model.compile(
+    optimizer='adam',
+    loss='mse',
+    metrics=['accuracy']
+)
+model.fit(
+    inputed,
+    expect,
+    epochs=100
+)
 ```
 
 ## Text-To-Speech
