@@ -1,6 +1,5 @@
 import database
 import string
-import keras
 
 tokenizer = list(' ,.!?*:'+string.ascii_lowercase)
 formatting = [
@@ -10,25 +9,6 @@ formatting = [
     ['hashtag','#']
 ]
 data = database.dataset()
-model = keras.Sequential([
-    keras.Input(shape=(180)),
-    keras.layers.Dense(32, activation="relu"),
-    keras.layers.Dense(10, activation="sigmoid")
-])
-model.compile(
-    optimizer='adam',
-    loss='mse',
-    metrics=['accuracy']
-)
-model.fit(
-    [ # NAME:Input
-        f"{i[0]}:{i[1]}" for i in data.getList()
-    ],
-    [ # Output
-        f"{i[2]}" for i in data.getList()
-    ],
-    epochs=100
-)
 
 def textTokenizer(text):
     x = ''
