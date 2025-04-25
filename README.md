@@ -53,7 +53,7 @@ connection.close()
 ```
 
 ## Chatbot
-TEXT
+I give up on KERAS!!!
 ```python
 import keras
 inputed = ["Hi!","How are you?"]
