@@ -6,50 +6,6 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-# Training Database
-class training:
-    # Create Table
-    def __init__(self):
-        with connection:
-            cursor.execute('''CREATE TABLE IF NOT EXISTS training (
-                id TEXT,
-                input TEXT,
-                output TEXT
-            )''')
-
-    # Adds from files using - User|Input|Output
-    def addTrainingData(self,file):
-        num = len(getTrainingData())
-        with open(file,'r') as file:
-            for i in file.readlines():
-                listed.append(i.split('|'))
-        for i in listed:
-            num += 1
-            with connection:
-                cursor.execute(
-                    "INSERT INTO training VALUES (:id :input, :output)",
-                    {'id': num,'input': inputed, 'output': outputed}
-                )
-
-    # Gets the list of data from the database
-    def getTrainingData(self):
-        cursor.execute("SELECT * FROM training")
-        return cursor.fetchall()
-
-    # Get specified amount of items randomly
-    def getTestingData(self,ammount):
-        tList = getTrainingData()
-        listed = []
-        nList = []
-        for i in range(ammount):
-            num = randint(0,len(tList))
-            while num in nList:
-                num = randint(0,len(tList))
-            nList.append(num)
-        for i in nList:
-            listed.append(tList[i])
-        return listed
-
 # Dataset Database
 class dataset:
     # Create Table
