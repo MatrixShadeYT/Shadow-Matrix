@@ -7,6 +7,12 @@ model = keras.Sequential([
     keras.layers.Dense(32, activation="relu"),
     keras.layers.Dense(10, activation="sigmoid")
 ])
+model.compile(
+    optimizer='adam',
+    loss='mse',
+    metrics=['accuracy']
+)
+model.fit(x_train,y_train,epochs=10)
 
 def request(text,user):
     output = ""

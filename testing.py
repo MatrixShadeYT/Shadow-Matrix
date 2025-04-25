@@ -8,3 +8,4 @@ while 1 == 0:
     else:
         res = chatbot_ai.response(text,"Shade")
         print("Shadow: {}".format(res))
+chatbot_ai.data.close()
