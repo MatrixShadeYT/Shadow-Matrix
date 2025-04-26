@@ -1,6 +1,5 @@
 from random import randint
 import numpy
-import math
 
 # Layer Class
 class Layer_Dense:

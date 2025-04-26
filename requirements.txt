@@ -4,5 +4,4 @@ sqlite3
 random
 string
 numpy
-math
 os
