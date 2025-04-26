@@ -12,5 +12,8 @@ class layer:
             self.biases = [randint(0,100)/100 for i in range(data)]
     def output(self,inputs):
         return numpy.dot(self.weights*inputs) + self.biases
+    def neuron(self,num,bias,weights):
+        self.weights[num] = weights
+        self.baises[num] = bias
     def getData(self):
         return self.neurons
