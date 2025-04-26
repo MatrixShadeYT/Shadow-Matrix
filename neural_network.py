@@ -14,3 +14,5 @@ class layer:
             self.biases = numpy.zeros((1,data))
         else:
             self.biases, self.weights = data
+    def forward(self,inputs):
+        self.output = np.dot(inputs,self.weights)+self.biases
