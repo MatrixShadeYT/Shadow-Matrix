@@ -89,8 +89,9 @@ I give up on KERAS!!!
 import keras
 inputed = ["Hi!","How are you?"]
 expect = ["Hello.","Good."]
+# Shape [['Hi!','Hello.'],['How are you?','Good.']]
 model = keras.Sequential([
-    keras.Input(shape=(180,)),
+    keras.Input(shape=(2,10)),
     keras.layers.Dense(32, activation="relu"),
     keras.layers.Dense(10, activation="sigmoid")
 ])
