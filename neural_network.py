@@ -16,7 +16,7 @@ class layer:
         else:
             self.biases, self.weights = data
     def forward(self,inputs):
-        if self.activation == 'ReLu':
-            self.output = max(0,np.dot(inputs,self.weights)+self.biases)
-        else:
-            self.output = np.dot(inputs,self.weights)+self.biases
+        self.output = np.dot(inputs,self.weights)+self.biases
+class Activation_ReLu:
+    def forward(self,inputs):
+        self.output = np.maximum(0,inputs)
