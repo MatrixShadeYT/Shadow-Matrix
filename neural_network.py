@@ -9,6 +9,8 @@ class model:
         for i in range(len(self.layers)):
             inputs = self.layers[i].forward(inputs)
         return inputs
+    def getData(self):
+        self.data = [self.layers[i].getData() for i in range(len(self.layers))]
 
 # Layer Class
 class Layer_Dense:
@@ -18,6 +20,8 @@ class Layer_Dense:
             self.biases, self.weights = self.generate(data,inputs)
         else:
             self.biases, self.weights = data
+    def getData(self):
+        return [self.biases,self.weights]
     def forward(self,inputs):
         self.output = np.dot(inputs,self.weights)+self.biases
         self.ReLu = np.maximum(0,self.output)
