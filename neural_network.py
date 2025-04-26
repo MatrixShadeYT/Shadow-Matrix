@@ -3,7 +3,7 @@ import numpy
 
 class layer:
     def __init__(self,data):
-        if data:
+        if isinstance(data,list):
             self.biases, self.weights = data
         else:
             self.weights = []
@@ -17,3 +17,12 @@ class layer:
         self.baises[num] = bias
     def getData(self):
         return self.neurons
+
+class model:
+    def __init__(self,layers):
+        self.layers = layers
+    def output(self,inputs):
+        inputs = inputs
+        for i in range(len(self.layers)):
+            inputs = self.layers[i].output(inputs)
+        return inputs
