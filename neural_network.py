@@ -20,6 +20,10 @@ class Layer_Dense:
             self.biases, self.weights = self.generate(data,inputs)
         else:
             self.biases, self.weights = data
+    def changeBias(self):
+        self.biases = [self.biases[i]+(randint(0,100)/100) for i in range(len(self.biases))]
+    def changeWeights(self):
+        self.weights = [[self.weights[i][x] for x in range(len(self.weights[i]))] for i in range(len(self.weights))]
     def getData(self):
         return [self.biases,self.weights]
     def forward(self,inputs):
