@@ -8,7 +8,7 @@ X = [
 ]
 
 # Layer Class
-class layer:
+class Layer_Dense:
     def __init__(self,inputs=1,data=5,activation=0):
         self.activation = activation
         if isinstance(data,int):
