@@ -12,11 +12,10 @@ class model:
 
 # Layer Class
 class Layer_Dense:
-    def __init__(self,activation=0,data=5,inputs=1):
+    def __init__(self,activation=0,data=0,inputs=1):
         self.activation = activation
         if isinstance(data,int):
-            self.weights = 0.1*np.random.randn(data,inputs)
-            self.biases = np.zeros((1,data))
+            self.biases, self.weights = self.generate(data,inputs)
         else:
             self.biases, self.weights = data
     def forward(self,inputs):
@@ -29,3 +28,6 @@ class Layer_Dense:
             return self.SM
         else:
             return self.output
+    def generate(self,data,inputs):
+        self.biases = np.zeros(1,data)
+        self.weights = np.random.randn(data,inputs)
