@@ -1,8 +1,6 @@
 from random import randint
 import numpy
-
-#Euler's Number
-e = 2.718281182846
+import math
 
 # Layer Class
 class Layer_Dense:
