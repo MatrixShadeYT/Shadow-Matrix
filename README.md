@@ -87,8 +87,15 @@ I tried a lot of stuff that I gave up on.
 I give up on KERAS!!!
 ```python
 import keras
+import string
 inputed = ["Hi!","How are you?"]
 expect = ["Hello.","Good."]
+# Basically Translate the text to numbers
+def tokenizer(text):
+    output = ""
+    listed = list('.!?'+string.ascii_letters)
+    output = output.join(listed[i].index) for i in listed
+    return output
 # Shape [['Hi!','Hello.'],['How are you?','Good.']]
 model = keras.Sequential([
     keras.Input(shape=(2,10)),
@@ -101,8 +108,8 @@ model.compile(
     metrics=['accuracy']
 )
 model.fit(
-    inputed,
-    expect,
+    tokenizer(inputed),
+    tokenizer(expect),
     epochs=100
 )
 ```
