@@ -6,52 +6,48 @@ import os
 connection = sqlite3.connect('ShadowAI.db')
 cursor = connection.cursor()
 
-# Dataset Database
-class dataset:
-    # Create Table
-    def __init__(self):
-        with connection:
-            cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
-                user TEXT,
-                input TEXT,
-                output TEXT
-            )''')
+with connection:
+    cursor.execute('''CREATE TABLE IF NOT EXISTS dataset (
+        user TEXT,
+        input TEXT,
+        output TEXT
+    )''')
 
-    # Get values by user
-    def getByUser(self,user):
-        cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
-        return cursor.fetchall()
+# Get values by user
+def getByUser(user):
+    cursor.execute("SELECT * FROM dataset WHERE user = :user",{'user':user})
+    return cursor.fetchall()
 
-    # Get values by input
-    def getByInput(self,inputed):
-        cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
-        return cursor.fetchall()
+# Get values by input
+def getByInput(inputed):
+    cursor.execute("SELECT * FROM dataset WHERE input = :input",{'input':inputed})
+    return cursor.fetchall()
 
-    # Get values by output
-    def getByOutput(self,outputed):
-        cursor.execute("SELECT * FROM dataset WHERE output = :output",{'output':outputed})
-        return cursor.fetchall()
+# Get values by output
+def getByOutput(outputed):
+    cursor.execute("SELECT * FROM dataset WHERE output = :output",{'output':outputed})
+    return cursor.fetchall()
 
-    # Get list of database
-    def getList(self):
-        cursor.execute("SELECT * FROM dataset")
-        return cursor.fetchall()
+# Get list of database
+def getList():
+    cursor.execute("SELECT * FROM dataset")
+    return cursor.fetchall()
 
-    # Add values to database
-    def enter(self,user,inputed,outputed):
-        with connection:
-            cursor.execute(
-                "INSERT INTO dataset VALUES (:user, :input, :output)",
-                {'user': user,'input': inputed, 'output': outputed}
-            )
+# Add values to database
+def enter(user,inputed,outputed):
+    with connection:
+        cursor.execute(
+            "INSERT INTO dataset VALUES (:user, :input, :output)",
+            {'user': user,'input': inputed, 'output': outputed}
+        )
 
-    # Remove item from Database
-    def removeItem(self,user,inputed,outputed):
-        with connection:
-            cursor.execute(
-                "DELETE FROM dataset WHERE user = :user AND input = :input AND output = :output",
-                {'user': user,'input': inputed,'output': outputed}
-            )
+# Remove item from Database
+def removeItem(user,inputed,outputed):
+    with connection:
+        cursor.execute(
+            "DELETE FROM dataset WHERE user = :user AND input = :input AND output = :output",
+            {'user': user,'input': inputed,'output': outputed}
+        )
 
 # Close the connection to database
 def close():
