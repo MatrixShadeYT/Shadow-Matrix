@@ -13,4 +13,5 @@ class Layer_Dense:
     def forward(self,inputs):
         self.output = np.dot(inputs,self.weights)+self.biases
         self.ReLu = np.maximum(0,self.output)
-        self.SM = numpy.exp(self.output)/numpy.sum(numpy.exp(self.output))
+        self.SM = numpy.exp(self.output-np.max(self.output,axis=1,keepdims=True)) / numpy.sum(numpy.exp(self.output-np.max(self.output,axis=1,keepdims=True)),axis=1,keepdims=True)
+        
