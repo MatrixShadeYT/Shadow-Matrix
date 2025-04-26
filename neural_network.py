@@ -28,8 +28,9 @@ class layer:
     def output(self,inputs):
         if isinstance(self.neurons,list):
             output = [self.neurons[i][0] for i in range(len(self.neurons))]
-            for i in range(len(output)):
-                output[i] += inputs[i]*self.weights[i]
+            for i in range(len(self.neurons)):
+                for x in range(len(inputs)):
+                    output[i] += inputs[x]*self.neurons[i][1][x]
         else:
             output = [self.neurons[i].getData() for i in range(len(self.neurons))]
         return output
