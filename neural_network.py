@@ -8,7 +8,7 @@ X = [
 ]
 
 class layer:
-    def __init__(self,inputs=1,data=5,activation):
+    def __init__(self,inputs=1,data=5,activation=0):
         self.activation = activation
         if isinstance(data,int):
             self.weights = 0.1*numpy.random.randn(inputs,data)
