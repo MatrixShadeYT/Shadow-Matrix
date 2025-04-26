@@ -55,6 +55,16 @@ connection.close()
 I decided to just make my own library.
 ```python
 import neural_network
+model = neural_network.model([
+    neural_network.layer(
+        [2,3,0.5],
+        [
+            [0.1,-0.14,0.5],
+            [-0.5,0.12,-0.33],
+            [-0.44,0.73,-0.13]
+        ]
+    )
+])
 ```
 
 ## Text-To-Speech
