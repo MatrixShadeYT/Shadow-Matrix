@@ -11,8 +11,7 @@ formatting = [
 ]
 data = database.dataset()
 info = data.getByUser('data')[0]
-zip(info[1].split('-'),info[2].split('-').split('|'))
-model = neural_network.model(info)
+model = neural_network.model([info[1].split('-'),[i.split('|') for i in info[2].split('-')]])
 
 def textTokenizer(text):
     x = ''
