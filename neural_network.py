@@ -1,6 +1,7 @@
 from random import randint
 import numpy as np
 
+# Model Class - [Layer]
 class model:
     def __init__(self,layers):
         self.layers = layers
@@ -9,10 +10,14 @@ class model:
         for i in range(len(self.layers)):
             inputs = self.layers[i].forward(inputs)
         return inputs
+    def setData(self,data):
+        self.data = data
+        for i in range(len(self.layers)):
+            self.layers[i].setData(data[i])
     def getData(self):
         self.data = [self.layers[i].getData() for i in range(len(self.layers))]
 
-# Layer Class
+# Layer Class - [biases,[weights]]
 class Layer_Dense:
     def __init__(self,activation=0,data=0,inputs=1):
         self.activation = activation
@@ -20,6 +25,8 @@ class Layer_Dense:
             self.biases, self.weights = self.generate(data,inputs)
         else:
             self.biases, self.weights = data
+    def setData(self,biases,weights):
+        self.biases, self.weights = biases, weights
     def getData(self):
         return [self.biases,self.weights]
     def forward(self,inputs):
