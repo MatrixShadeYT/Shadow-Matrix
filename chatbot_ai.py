@@ -1,6 +1,11 @@
+from httpimport import remote_repo
+with remote_repo(['MatrixShadeYT','Personal_AI'],'github') as r:
+    import neural_network
 import database
 import string
 
+data = database.dataset()
+model = neural_network.model()
 tokenizer = list(' ,.!?*:'+string.ascii_lowercase)
 formatting = [
     ['and','&'],
@@ -8,7 +13,6 @@ formatting = [
     ['percent','%'],
     ['hashtag','#']
 ]
-data = database.dataset()
 
 def textTokenizer(text):
     x = ''
