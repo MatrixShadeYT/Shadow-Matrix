@@ -1,4 +1,3 @@
-import neural_network
 import database
 import string
 
@@ -10,7 +9,6 @@ formatting = [
     ['hashtag','#']
 ]
 data = database.dataset()
-info = data.getByUser('data')[0]
 
 def textTokenizer(text):
     x = ''
