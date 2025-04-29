@@ -1,5 +1,4 @@
 speechrecognition
-httpimport
 pyttsx3
 sqlite3
 random
