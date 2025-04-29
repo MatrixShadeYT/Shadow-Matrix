@@ -3,6 +3,5 @@ pyttsx3
 sqlite3
 random
 string
-
 numpy
 os
