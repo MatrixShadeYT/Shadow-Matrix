@@ -3,6 +3,6 @@ pyttsx3
 sqlite3
 random
 string
-keras
+
 numpy
 os
