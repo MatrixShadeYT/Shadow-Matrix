@@ -22,7 +22,6 @@ def microphone():
         except sr.UnknownValueError:
             print("Unknown error occurred.")
 ```
-
 ## Database
 I went with "sqlite3" which is another default import. There are lots of options out there, I just found this one the easiest to deal with.<br>
 ```python
@@ -55,7 +54,6 @@ connection.close()
 TEXT
 ```python
 ```
-
 ## Text-To-Speech
 This is just a prototype for now.
 ```python
@@ -69,15 +67,11 @@ def speech(text,file=False):
         engine.say(text)
     engine.runAndWait()
 ```
-
 ## Create-Model
 TEXT
-
 ## Animate
 TEXT
-
 ## Vtube-Studio
 TEXT
-
 ## Movement
 TEXT
