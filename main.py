@@ -5,8 +5,15 @@ import chatbot_ai
 speech('Program started')
 print('BOT: Program started.')
 
+def textualize(text):
+    if ['who','what','where','why','when','how'] in text.split(' '):
+        text = f"{text}?"
+    else:
+        text = f"{text}."
+    return text.capitalize()
+
 while True:
-    mic = microphone()
+    mic = textualize(microphone())
     if mic == "Exit program.":
         print('Shade: Exit program.')
         speech('Exiting program.')
