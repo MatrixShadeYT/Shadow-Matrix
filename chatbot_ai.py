@@ -11,12 +11,11 @@ if database.getList() != []:
 def response(user_input,user):
     if user == "Shade" and user_input == "Clear database.":
         database.clearItems()
-        convo = [{"role": "system", "content": "You are a girl who is named Shadow Matrix and I am your brother, Shade Matrix. You can only respond in 2 or 3 sentences."}]
-        return "Database cleared."
-    else:
-        convo.append({"role": "user", "content": user_input})
-        response = ollama.chat(model='llama2',messages=convo)
-        answer = response.message.content
-        convo.append({"role": "assistant", "content": answer})
-        database.enter(user,user_input,answer)
-        return answer
+        print("System: Database cleared, please restart.")
+        break
+    convo.append({"role": "user", "content": user_input})
+    response = ollama.chat(model='llama2',messages=convo)
+    answer = response.message.content
+    convo.append({"role": "assistant", "content": answer})
+    database.enter(user,user_input,answer)
+    return answer
