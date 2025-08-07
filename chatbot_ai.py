@@ -1,2 +1,17 @@
+import database
+import ollama
+
+convo = [{"role": "system", "content": "You are a shy girl who is named Shadow Matrix and I am your brother, Shade Matrix. You can only respond in 2 or 3 sentences."}]
+if database.getList() != []:
+    listed = database.getList()
+    for i in listed:
+        convo.append({"role": f"{i[0]}","content": f"{i[1]}"})
+        convo.append({"role": "bot", "content": f"{i[2]}"})
+
 def response(text,user):
-    return f'{user}, you said "{text}". Right?'
+    convo.append({"role": "user", "content": user_input})
+    response = ollama.chat(model='llama2',messages=convo)
+    answer = response.message.content
+    convo.append({"role": "assistant", "content": answer})
+    database.enter(user,text,answer)
+    return answer
