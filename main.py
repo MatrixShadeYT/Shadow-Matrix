@@ -6,8 +6,8 @@ speech('Program started')
 print('System: Program started.')
 
 while True:
-    mic = f"{microphone().capitalize()}."
-    if mic == "Exit program.":
+    mic = microphone()
+    if mic == "exit program:
         print('Shade: Exit program.')
         speech('Exiting program.')
         print('System: Exiting program.')
