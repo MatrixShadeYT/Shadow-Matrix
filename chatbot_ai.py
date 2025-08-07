@@ -13,5 +13,5 @@ def response(user_input,user):
     response = ollama.chat(model='llama2',messages=convo)
     answer = response.message.content
     convo.append({"role": "assistant", "content": answer})
-    database.enter(user,text,answer)
+    database.enter(user,user_input,answer)
     return answer
