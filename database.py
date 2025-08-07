@@ -50,7 +50,7 @@ def removeItem(user,inputed,outputed):
         )
 
 def clearItems():
-    listed = database.getList()
+    listed = getList()
     for i in listed:
         removeItem(i[0],i[1],i[2])
 
