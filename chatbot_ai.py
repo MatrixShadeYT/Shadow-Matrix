@@ -8,7 +8,7 @@ if database.getList() != []:
         convo.append({"role": f"{i[0]}","content": f"{i[1]}"})
         convo.append({"role": "bot", "content": f"{i[2]}"})
 
-def response(text,user):
+def response(user_input,user):
     convo.append({"role": "user", "content": user_input})
     response = ollama.chat(model='llama2',messages=convo)
     answer = response.message.content
