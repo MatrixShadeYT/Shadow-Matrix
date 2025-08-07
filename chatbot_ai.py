@@ -9,10 +9,6 @@ if database.getList() != []:
         convo.append({"role": "bot", "content": f"{i[2]}"})
 
 def response(user_input,user):
-    if user == "Shade" and user_input == "Clear database.":
-        database.clearItems()
-        print("System: Database cleared, please restart.")
-        break
     convo.append({"role": "user", "content": user_input})
     response = ollama.chat(model='llama2',messages=convo)
     answer = response.message.content
