@@ -9,7 +9,7 @@ if database.getList() != []:
         convo.append({"role": "bot", "content": f"{i[2]}"})
 
 def response(user_input,user):
-    if user == "Shade" & user_input == "Clear database.":
+    if user == "Shade" and user_input == "Clear database.":
         database.clearItems()
         convo = [{"role": "system", "content": "You are a girl who is named Shadow Matrix and I am your brother, Shade Matrix. You can only respond in 2 or 3 sentences."}]
         return "Database cleared."
