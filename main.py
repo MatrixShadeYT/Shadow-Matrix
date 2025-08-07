@@ -23,4 +23,3 @@ while True:
     response = chatbot_ai.response(mic,'Shade')
     speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
-database.close()
