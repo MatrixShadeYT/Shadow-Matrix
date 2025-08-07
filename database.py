@@ -49,6 +49,11 @@ def removeItem(user,inputed,outputed):
             {'user': user,'input': inputed,'output': outputed}
         )
 
+def clearItems():
+    listed = database.getList()
+    for i in listed:
+        removeItem(i[0],i[1],i[2])
+
 # Close the connection to database
 def close():
     connection.close()
