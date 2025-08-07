@@ -12,6 +12,7 @@ while True:
         speech('Exiting program.')
         print('BOT: Exiting program.')
         break
+    print(f'Shade: {mic}')
     response = chatbot_ai.response(mic,'Shade')
     speech(response.replace('\n',' '))
     print("BOT: {0}".format(response))
