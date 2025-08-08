@@ -1,7 +1,7 @@
 import database
 import ollama
 
-convo = [{"role": "system", "content": "You are a girl who is named Shadow Matrix and I am your brother, Shade Matrix. You can only respond in 2 or 3 sentences."}]
+convo = [{"role": "system", "content": "You are a girl who is named Shadow Matrix, you're a bit shy and I am your brother, Shade Matrix. You can only respond in 2 or 3 sentences."}]
 if database.getList() != []:
     listed = database.getList()
     for i in listed:
