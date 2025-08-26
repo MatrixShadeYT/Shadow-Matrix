@@ -51,8 +51,10 @@ print(cursor.fetchall())
 connection.close()
 ```
 ## Chatbot
-TEXT
+I went with "ollama" because it's the easiest to use. I really like how this works though it'll take a while to setup.
 ```python
+import ollama
+convo = [{"role":"system","content":"AI's first convo."}]
 ```
 ## Text-To-Speech
 This is just a prototype for now.
