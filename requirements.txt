@@ -1,8 +1,0 @@
-speechrecognition
-pyttsx3
-sqlite3
-random
-string
-ollama
-numpy
-os
