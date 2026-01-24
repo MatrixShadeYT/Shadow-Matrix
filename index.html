@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shadow Matrix - MSYT</title>
+        <script type="module" src="./main.js" defer></script>
+        <style>
+            html, body {
+                background-color: black;
+                overflow: hidden;
+                padding: 0px;
+                margin: 0px;
+            }
+            #gameCanvas {
+                transform: translate(-50%,-50%);
+                background-color: gray;
+                position: absolute;
+                color: white;
+                width: 50%;
+                left: 50%;
+                top: 50%;
+            }
+            #gui {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                left: 0px;
+                top: 0px;
+            }
+            #assets {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="assets"></div>
+        <canvas id="gameCanvas">Your browser does not support the canvas element.</canvas>
+        <div id="gui"></div>
+    </body>
+</html>
