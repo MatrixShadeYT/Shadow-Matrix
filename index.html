@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Shadow Matrix VTS Stable</title>
+<title>VTuber Core</title>
 
 <style>
 html, body {
@@ -16,101 +16,22 @@ html, body {
 }
 
 canvas {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     display: block;
-}
-
-#pixiCanvas {
-    pointer-events: auto;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="threeCanvas"></canvas>
 <canvas id="pixiCanvas"></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/pixi.js@6.x/dist/browser/pixi.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@7.4.0/dist/pixi.min.js"></script>
 <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
 
 <script type="module">
-
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.181.1/build/three.module.js";
-
-
-// =====================================================
-// SAFE SINGLETON CLEANUP (FIXES DOUBLE ARM / DUP RENDER)
-// =====================================================
-
-if (window.__APP__) {
-    window.__APP__.destroy?.();
-}
-
-if (window.__MODEL__) {
-    window.__MODEL__.destroy?.();
-}
-
-window.__APP__ = null;
-window.__MODEL__ = null;
-
-
-// =====================================================
-// THREE SETUP
-// =====================================================
-
-const renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById("threeCanvas"),
-    antialias: true,
-    alpha: true
-});
-
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-
-camera.position.z = 5;
-
-
-// WORLD ROOT (CRITICAL FIX)
-const world = new THREE.Group();
-scene.add(world);
-
-
-// LIGHT
-world.add(new THREE.AmbientLight(0xffffff, 1));
-
-
-// OBJECTS
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(),
-    new THREE.MeshNormalMaterial()
-);
-cube.position.x = 2;
-world.add(cube);
-
-const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(0.7, 32, 32),
-    new THREE.MeshNormalMaterial()
-);
-sphere.position.x = -2;
-world.add(sphere);
-
-
-// =====================================================
-// PIXI APP (NO DUPLICATES)
-// =====================================================
 
 const app = new PIXI.Application({
     view: document.getElementById("pixiCanvas"),
@@ -119,11 +40,8 @@ const app = new PIXI.Application({
     antialias: true
 });
 
-window.__APP__ = app;
-
-
 // =====================================================
-// LIVE2D MODEL
+// LOAD MODEL
 // =====================================================
 
 const Live2DModel = PIXI.live2d.Live2DModel;
@@ -132,19 +50,20 @@ const model = await Live2DModel.from(
     "./models/Hiyori/Hiyori.model3.json"
 );
 
-window.__MODEL__ = model;
-
 app.stage.addChild(model);
 
+// center
 model.anchor.set(0.5);
+model.x = window.innerWidth / 2;
+model.y = window.innerHeight * 0.75;
 model.scale.set(0.25);
 
+// expose for debugging
+window.model = model;
 
 // =====================================================
-// STATE (VTS CORE)
+// STATE
 // =====================================================
-
-const sceneOffset = { x: 0, y: 0 };
 
 let mouseX = 0;
 let mouseY = 0;
@@ -154,29 +73,22 @@ let smoothY = 0;
 
 let dragging = false;
 
-const PARALLAX = 0.02;
-
-
 // =====================================================
 // PARAM SYSTEM
 // =====================================================
 
-const coreModel = model.internalModel.coreModel;
+const core = model.internalModel.coreModel;
 
-function setParam(id, value, weight = 0.12) {
-    const index = coreModel.getParameterIndex(id);
-    if (index === -1) return;
+function setParam(id, value, w = 0.15) {
+    const i = core.getParameterIndex(id);
+    if (i === -1) return;
 
-    const current = coreModel.getParameterValueByIndex(index);
-    coreModel.setParameterValueByIndex(
-        index,
-        current + (value - current) * weight
-    );
+    const current = core.getParameterValueByIndex(i);
+    core.setParameterValueByIndex(i, current + (value - current) * w);
 }
 
-
 // =====================================================
-// MOUSE TRACKING
+// INPUT
 // =====================================================
 
 window.addEventListener("mousemove", (e) => {
@@ -184,11 +96,7 @@ window.addEventListener("mousemove", (e) => {
     mouseY = (e.clientY / window.innerHeight) * 2 - 1;
 });
 
-
-// =====================================================
-// DRAG (FIXED: shared camera movement)
-// =====================================================
-
+// drag model
 model.eventMode = "static";
 model.cursor = "grab";
 
@@ -205,44 +113,32 @@ window.addEventListener("pointerup", () => {
 window.addEventListener("pointermove", (e) => {
     if (!dragging) return;
 
-    sceneOffset.x += e.movementX;
-    sceneOffset.y += e.movementY;
+    model.x += e.movementX;
+    model.y += e.movementY;
 });
 
-
-// =====================================================
-// ZOOM (FIXED: affects WHOLE WORLD)
-// =====================================================
-
+// zoom
 window.addEventListener("wheel", (e) => {
-
-    let next = world.scale.x - e.deltaY * 0.001;
-
-    next = Math.max(0.3, Math.min(2.5, next));
-
-    world.scale.set(next, next, next);
+    let s = model.scale.x - e.deltaY * 0.001;
+    s = Math.max(0.1, Math.min(1.5, s));
+    model.scale.set(s);
 });
 
-
 // =====================================================
-// EXPRESSIONS (SAFE)
+// EXPRESSIONS
 // =====================================================
 
 async function setExpression(name) {
     try {
-        const expressions =
+        const list =
             model.internalModel.motionManager.expressionManager.expressions;
 
-        const exp =
-            expressions.find(e => e.name.includes(name));
+        const found =
+            list.find(e => e.name.includes(name));
 
-        if (exp) {
-            model.expression(exp.name);
-        }
+        if (found) model.expression(found.name);
 
-    } catch (e) {
-        console.warn(e);
-    }
+    } catch {}
 }
 
 window.addEventListener("keydown", (e) => {
@@ -250,64 +146,49 @@ window.addEventListener("keydown", (e) => {
     if (e.key === "2") setExpression("F02");
 
     if (e.key === "m") {
-        try {
-            model.motion("TapBody");
-        } catch {}
+        try { model.motion("TapBody"); } catch {}
     }
 });
 
-
 // =====================================================
-// ANIMATION LOOP
+// LOOP (VTUBER CORE)
 // =====================================================
 
 function animate() {
 
     requestAnimationFrame(animate);
 
-    // THREE WORLD
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-
-    sphere.rotation.y -= 0.01;
-
-
-    // SMOOTH INPUT
+    // smooth tracking
     smoothX += (mouseX - smoothX) * 0.1;
     smoothY += (mouseY - smoothY) * 0.1;
 
     const t = performance.now() * 0.001;
 
-
-    // LIVE2D (RESPONSIVE VTS STYLE)
+    // head
     setParam("ParamAngleX", smoothX * 30);
     setParam("ParamAngleY", -smoothY * 30);
     setParam("ParamAngleZ", smoothX * 10);
 
-    setParam("ParamBodyAngleX", smoothX * 10);
-
+    // eyes
     setParam("ParamEyeBallX", smoothX, 0.35);
     setParam("ParamEyeBallY", -smoothY, 0.35);
 
+    // body sway
+    setParam("ParamBodyAngleX", smoothX * 8, 0.05);
+
+    // breathing
     setParam("ParamBreath", (Math.sin(t * 2) + 1) * 0.5, 0.05);
 
+    // idle sway
+    setParam("ParamAngleY", Math.sin(t) * 2, 0.02);
 
-    // WORLD CAMERA (FIXED SYNC)
-    world.position.x = sceneOffset.x * PARALLAX;
-    world.position.y = -sceneOffset.y * PARALLAX;
-
-    model.x = window.innerWidth * 0.5 + sceneOffset.x * PARALLAX * 50;
-    model.y = window.innerHeight * 0.75 - sceneOffset.y * PARALLAX * 50;
-
-
-    // OPTIONAL: Live2D update sync (prevents stiffness)
+    // update model
     model.update?.(0.016);
-
-    renderer.render(scene, camera);
 }
 
 animate();
 
 </script>
+
 </body>
 </html>
