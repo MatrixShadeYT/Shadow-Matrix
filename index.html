@@ -1,40 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Shadow Matrix - MSYT</title>
-        <script type="module" src="./main.js" defer></script>
-        <style>
-            html, body {
-                background-color: black;
-                overflow: hidden;
-                padding: 0px;
-                margin: 0px;
-            }
-            #gameCanvas {
-                transform: translate(-50%,-50%);
-                background-color: white;
-                position: absolute;
-                color: white;
-                width: 75%;
-                left: 50%;
-                top: 50%;
-            }
-            #gui {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                left: 0px;
-                top: 0px;
-            }
-            #assets {
-                display: none;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="assets"></div>
-        <canvas id="gameCanvas">Your browser does not support the canvas element.</canvas>
-        <div id="gui"></div>
-    </body>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shadow Matrix VTS Stable</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+}
+
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#pixiCanvas {
+    pointer-events: auto;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="threeCanvas"></canvas>
+<canvas id="pixiCanvas"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@6.x/dist/browser/pixi.min.js"></script>
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js"></script>
+
+<script type="module">
+
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.181.1/build/three.module.js";
+
+
+// =====================================================
+// SAFE SINGLETON CLEANUP (FIXES DOUBLE ARM / DUP RENDER)
+// =====================================================
+
+if (window.__APP__) {
+    window.__APP__.destroy?.();
+}
+
+if (window.__MODEL__) {
+    window.__MODEL__.destroy?.();
+}
+
+window.__APP__ = null;
+window.__MODEL__ = null;
+
+
+// =====================================================
+// THREE SETUP
+// =====================================================
+
+const renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById("threeCanvas"),
+    antialias: true,
+    alpha: true
+});
+
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+
+camera.position.z = 5;
+
+
+// WORLD ROOT (CRITICAL FIX)
+const world = new THREE.Group();
+scene.add(world);
+
+
+// LIGHT
+world.add(new THREE.AmbientLight(0xffffff, 1));
+
+
+// OBJECTS
+const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(),
+    new THREE.MeshNormalMaterial()
+);
+cube.position.x = 2;
+world.add(cube);
+
+const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(0.7, 32, 32),
+    new THREE.MeshNormalMaterial()
+);
+sphere.position.x = -2;
+world.add(sphere);
+
+
+// =====================================================
+// PIXI APP (NO DUPLICATES)
+// =====================================================
+
+const app = new PIXI.Application({
+    view: document.getElementById("pixiCanvas"),
+    resizeTo: window,
+    transparent: true,
+    antialias: true
+});
+
+window.__APP__ = app;
+
+
+// =====================================================
+// LIVE2D MODEL
+// =====================================================
+
+const Live2DModel = PIXI.live2d.Live2DModel;
+
+const model = await Live2DModel.from(
+    "./models/Hiyori/Hiyori.model3.json"
+);
+
+window.__MODEL__ = model;
+
+app.stage.addChild(model);
+
+model.anchor.set(0.5);
+model.scale.set(0.25);
+
+
+// =====================================================
+// STATE (VTS CORE)
+// =====================================================
+
+const sceneOffset = { x: 0, y: 0 };
+
+let mouseX = 0;
+let mouseY = 0;
+
+let smoothX = 0;
+let smoothY = 0;
+
+let dragging = false;
+
+const PARALLAX = 0.02;
+
+
+// =====================================================
+// PARAM SYSTEM
+// =====================================================
+
+const coreModel = model.internalModel.coreModel;
+
+function setParam(id, value, weight = 0.12) {
+    const index = coreModel.getParameterIndex(id);
+    if (index === -1) return;
+
+    const current = coreModel.getParameterValueByIndex(index);
+    coreModel.setParameterValueByIndex(
+        index,
+        current + (value - current) * weight
+    );
+}
+
+
+// =====================================================
+// MOUSE TRACKING
+// =====================================================
+
+window.addEventListener("mousemove", (e) => {
+    mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+});
+
+
+// =====================================================
+// DRAG (FIXED: shared camera movement)
+// =====================================================
+
+model.eventMode = "static";
+model.cursor = "grab";
+
+model.on("pointerdown", () => {
+    dragging = true;
+    model.cursor = "grabbing";
+});
+
+window.addEventListener("pointerup", () => {
+    dragging = false;
+    model.cursor = "grab";
+});
+
+window.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+
+    sceneOffset.x += e.movementX;
+    sceneOffset.y += e.movementY;
+});
+
+
+// =====================================================
+// ZOOM (FIXED: affects WHOLE WORLD)
+// =====================================================
+
+window.addEventListener("wheel", (e) => {
+
+    let next = world.scale.x - e.deltaY * 0.001;
+
+    next = Math.max(0.3, Math.min(2.5, next));
+
+    world.scale.set(next, next, next);
+});
+
+
+// =====================================================
+// EXPRESSIONS (SAFE)
+// =====================================================
+
+async function setExpression(name) {
+    try {
+        const expressions =
+            model.internalModel.motionManager.expressionManager.expressions;
+
+        const exp =
+            expressions.find(e => e.name.includes(name));
+
+        if (exp) {
+            model.expression(exp.name);
+        }
+
+    } catch (e) {
+        console.warn(e);
+    }
+}
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "1") setExpression("F01");
+    if (e.key === "2") setExpression("F02");
+
+    if (e.key === "m") {
+        try {
+            model.motion("TapBody");
+        } catch {}
+    }
+});
+
+
+// =====================================================
+// ANIMATION LOOP
+// =====================================================
+
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    // THREE WORLD
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
+    sphere.rotation.y -= 0.01;
+
+
+    // SMOOTH INPUT
+    smoothX += (mouseX - smoothX) * 0.1;
+    smoothY += (mouseY - smoothY) * 0.1;
+
+    const t = performance.now() * 0.001;
+
+
+    // LIVE2D (RESPONSIVE VTS STYLE)
+    setParam("ParamAngleX", smoothX * 30);
+    setParam("ParamAngleY", -smoothY * 30);
+    setParam("ParamAngleZ", smoothX * 10);
+
+    setParam("ParamBodyAngleX", smoothX * 10);
+
+    setParam("ParamEyeBallX", smoothX, 0.35);
+    setParam("ParamEyeBallY", -smoothY, 0.35);
+
+    setParam("ParamBreath", (Math.sin(t * 2) + 1) * 0.5, 0.05);
+
+
+    // WORLD CAMERA (FIXED SYNC)
+    world.position.x = sceneOffset.x * PARALLAX;
+    world.position.y = -sceneOffset.y * PARALLAX;
+
+    model.x = window.innerWidth * 0.5 + sceneOffset.x * PARALLAX * 50;
+    model.y = window.innerHeight * 0.75 - sceneOffset.y * PARALLAX * 50;
+
+
+    // OPTIONAL: Live2D update sync (prevents stiffness)
+    model.update?.(0.016);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+</script>
+</body>
 </html>
